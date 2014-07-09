@@ -19,9 +19,9 @@ RUN ln -s /root/.ssh /.ssh
 
 # Deploy richard
 RUN git clone https://github.com/codersquid/richard-deploy.git
-RUN echo 'admins = [('dag', 'dag@bioteam.net'), ('brad', 'chapmanb@50mail.com'), ('carl', 'carl@nextdayvideo.com', ), ('sheila', 'sheila@codersquid.com')]' > richard-deploy/secrets.py
+RUN echo "admins = [('dag', 'dag@bioteam.net'), ('brad', 'chapmanb@50mail.com'), ('carl', 'carl@nextdayvideo.com', ), ('sheila', 'sheila@codersquid.com')]" > richard-deploy/secrets.py
 RUN sed -i 's/SITE_NAME = "rt1"/SITE_NAME = "vid"/g' richard-deploy/fabfile.py
-RUN sed -i "s/SERVER_NAME='richard.test1.nextdayvideo.com'/SERVER_NAME='video.open-bio.org'/g" richard-deploy/fabfile.py
+RUN sed -i "s/SERVER_NAME='richard.test1.nextdayvideo.com'/SERVER_NAME='localhost'/g" richard-deploy/fabfile.py
 RUN sed -i "s/^env.hosts/#env.hosts/g" richard-deploy/fabfile.py
 RUN sed -i "s/require.postgres.server()/require.postgres.server(); sudo('service postgresql start')/g" richard-deploy/fabfile.py
 RUN sed -i "s/supervisor.update_config()/sudo('service supervisor start'); supervisor.update_config(); sudo('service supervisor stop')/g" richard-deploy/fabfile.py
